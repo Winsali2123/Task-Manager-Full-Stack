@@ -1,4 +1,8 @@
 const { createUser, findUserByEmail } = require("../models/userModel");
+
+const bcrypt = require("bcrypt");
+const hashedPassword = await bcrypt.hash(password, 10);
+
 const register = async(req, res) => {
     const {name, email, password } = req.body;
     const existingUser = await findUserByEmail(email);
@@ -8,7 +12,7 @@ const register = async(req, res) => {
         });
     }
 
-    await createUser(name, email, password);
+    await createUser(name, email, hashedPassword);
 
 //Code HTTP :201 Created signifie :Une ressource a ete creee
     res.status(201).json({
@@ -25,7 +29,9 @@ const login = async(req, res) => {
         });
     }
 
-    if(user.password !== password) {
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if(!isMatch) {
         return res.status(400).json({
             message:"Mot de passe incorrect"
         });
