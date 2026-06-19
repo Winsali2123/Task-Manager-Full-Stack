@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js"
   },
-  "repository":{
+  "repository": {
     "type": "git",
     "url": "https://github.com/Winsali2123/Task-Manager-Full-Stack.git"
   },
@@ -18,6 +18,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mssql": "^12.5.5"
   }

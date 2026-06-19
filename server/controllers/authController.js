@@ -10,9 +10,12 @@ const register = async(req, res) => {
 
     await createUser(name, email, password);
 
+//Code HTTP :201 Created signifie :Une ressource a ete creee
     res.status(201).json({
         message:"Utilisateur cree"
     });
 };
+
+const login = async(req, res)
 
 module.exports = {register};
