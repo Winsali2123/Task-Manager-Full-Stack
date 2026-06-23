@@ -1,5 +1,8 @@
 const { createUser, findUserByEmail } = require("../models/userModel");
 
+//Importer JWT
+const jwt = require("jsonwebtoken");
+
 const bcrypt = require("bcrypt");
 const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -37,8 +40,18 @@ const login = async(req, res) => {
         });
     }
 
+    const token = jwt.sign(
+        {
+            id: user.id,
+            email: user.email
+        },
+        process.env.JWT_SECRET,
+        {
+            expiresIn: "1d"    //Durrée de validité = 1 day
+        }
+    );
     res.status(200).json({
-        message:"Connexion reussie"
+        token
     });
 };
 
